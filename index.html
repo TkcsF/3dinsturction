@@ -281,22 +281,105 @@
         let currentStep = 1;
         const totalSteps = 12;
         let autoRotate = false;
+        let allNodes = [];
 
         // Test data
         const steps = [
             {
                 stepNumber: 1,
-                title: "Part 1 - Identify this part",
-                description: "This is the first part of your robot assembly.",
-                partsUsedNames: ["Test Part 1", "Test Part 2"],
-                tools: "Test wrench, test bolts"
+                title: "Part 1 - empty_2",
+                description: "Showing part empty_2",
+                partsToShow: ["empty_2"],
+                partsUsedNames: ["empty_2"],
+                tools: ""
             },
             {
                 stepNumber: 2,
-                title: "Part 2 - Identify this part",
-                description: "This is the second part of your robot assembly.",
-                partsUsedNames: ["Test Part 3"],
-                tools: "Test screwdriver"
+                title: "Part 2 - empty_3",
+                description: "Showing part empty_3",
+                partsToShow: ["empty_3"],
+                partsUsedNames: ["empty_3"],
+                tools: ""
+            },
+            {
+                stepNumber: 3,
+                title: "Part 3 - empty_4",
+                description: "Showing part empty_4",
+                partsToShow: ["empty_4"],
+                partsUsedNames: ["empty_4"],
+                tools: ""
+            },
+            {
+                stepNumber: 4,
+                title: "Part 4 - empty_5",
+                description: "Showing part empty_5",
+                partsToShow: ["empty_5"],
+                partsUsedNames: ["empty_5"],
+                tools: ""
+            },
+            {
+                stepNumber: 5,
+                title: "Part 5 - empty_6",
+                description: "Showing part empty_6",
+                partsToShow: ["empty_6"],
+                partsUsedNames: ["empty_6"],
+                tools: ""
+            },
+            {
+                stepNumber: 6,
+                title: "Part 6 - empty_7",
+                description: "Showing part empty_7",
+                partsToShow: ["empty_7"],
+                partsUsedNames: ["empty_7"],
+                tools: ""
+            },
+            {
+                stepNumber: 7,
+                title: "Part 7 - empty_8",
+                description: "Showing part empty_8",
+                partsToShow: ["empty_8"],
+                partsUsedNames: ["empty_8"],
+                tools: ""
+            },
+            {
+                stepNumber: 8,
+                title: "Part 8 - empty_9",
+                description: "Showing part empty_9",
+                partsToShow: ["empty_9"],
+                partsUsedNames: ["empty_9"],
+                tools: ""
+            },
+            {
+                stepNumber: 9,
+                title: "Part 9 - empty_10",
+                description: "Showing part empty_10",
+                partsToShow: ["empty_10"],
+                partsUsedNames: ["empty_10"],
+                tools: ""
+            },
+            {
+                stepNumber: 10,
+                title: "Part 10 - empty_11",
+                description: "Showing part empty_11",
+                partsToShow: ["empty_11"],
+                partsUsedNames: ["empty_11"],
+                tools: ""
+            },
+            {
+                stepNumber: 11,
+                title: "Part 11 - empty_12",
+                description: "Showing part empty_12",
+                partsToShow: ["empty_12"],
+                partsUsedNames: ["empty_12"],
+                tools: ""
+            },
+            {
+                stepNumber: 12,
+                title: "Part 12 - empty_13",
+                description: "Showing part empty_13",
+                partsToShow: ["empty_13"],
+                partsUsedNames: ["empty_13"],
+                tools: ""
             }
         ];
 
@@ -308,8 +391,27 @@
             console.error(message);
         }
 
+        function hideAllParts() {
+            if (!model) return;
+            model.traverse((child) => {
+                child.visible = false;
+            });
+        }
+
+        function showParts(partNames) {
+            if (!model) return;
+            hideAllParts();
+            
+            model.traverse((child) => {
+                if (partNames.includes(child.name)) {
+                    child.visible = true;
+                    console.log('Showing:', child.name);
+                }
+            });
+        }
+
         function updateStep() {
-            const step = steps[currentStep - 1] || steps[0];
+            const step = steps[currentStep - 1];
             
             document.getElementById('stepNum').textContent = step.stepNumber;
             document.getElementById('stepTitle').textContent = step.title;
@@ -328,6 +430,8 @@
             
             document.getElementById('prevBtn').disabled = currentStep === 1;
             document.getElementById('nextBtn').disabled = currentStep === totalSteps;
+            
+            showParts(step.partsToShow);
         }
 
         function initThreeJs() {
@@ -388,13 +492,21 @@
                         model.scale.set(1, 1, 1);
                         scene.add(model);
                         
+                        // Collect all node names
+                        model.traverse((child) => {
+                            if (child.name) {
+                                allNodes.push(child.name);
+                                console.log('Node:', child.name);
+                            }
+                        });
+                        
                         fitCameraToObject();
                         animate();
                         
                         document.getElementById('loadingSpinner').style.display = 'none';
                         updateStep();
                         
-                        console.log('Model loaded successfully');
+                        console.log('Model loaded successfully. Total nodes:', allNodes.length);
                     },
                     (progress) => {
                         const percent = Math.round((progress.loaded / progress.total) * 100);
@@ -428,7 +540,6 @@
             
             if (controls) {
                 controls.update();
-                // Disable auto-rotation if user is interacting
                 if (controls.autoRotate && controls.isDragging) {
                     controls.autoRotate = false;
                     autoRotate = false;
@@ -457,7 +568,7 @@
                 controls.autoRotate = false;
                 autoRotate = false;
             }
-            console.log('Replay animation started');
+            console.log('Replay button clicked');
         });
 
         // Initialize
