@@ -405,6 +405,10 @@
             model.traverse((child) => {
                 if (partNames.includes(child.name)) {
                     child.visible = true;
+                    // Also show all children of this part
+                    child.traverse((grandchild) => {
+                        grandchild.visible = true;
+                    });
                     console.log('Showing:', child.name);
                 }
             });
