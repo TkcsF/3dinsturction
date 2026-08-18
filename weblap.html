@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embroidery Robot - Build Instructions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .viewer-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #333;
+            background: #0a0a0a;
+            position: relative;
+        }
+        
+        #canvas {
+            flex: 1;
+            display: block;
+        }
+        
+        .viewer-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: #666;
+            pointer-events: none;
+        }
+        
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border: 4px solid #333;
+            border-top: 4px solid #ff9500;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .info-section {
+            width: 380px;
+            background: #1a1a1a;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .step-header {
+            background: #2a2a2a;
+            padding: 24px 20px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+        }
+        
+        .step-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ff9500;
+            margin-bottom: 8px;
+        }
+        
+        .step-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        
+        .step-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #b0b0b0;
+        }
+        
+        .step-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .info-group {
+            margin-bottom: 24px;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .parts-list {
+            list-style: none;
+        }
+        
+        .parts-list li {
+            font-size: 14px;
+            color: #d0d0d0;
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .parts-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .parts-list li::before {
+            content: "• ";
+            color: #ff9500;
+            margin-right: 8px;
+        }
+        
+        .tools-text {
+            font-size: 14px;
+            color: #d0d0d0;
+            line-height: 1.5;
+        }
+        
+        .step-counter {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            padding: 12px 0;
+        }
+        
+        .animation-controls {
+            background: #222;
+            padding: 16px;
+            border-top: 1px solid #333;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .animation-controls button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .animation-controls button:hover {
+            background: #0052a3;
+        }
+        
+        .navigation {
+            background: #2a2a2a;
+            padding: 16px 20px;
+            border-top: 1px solid #333;
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+        }
+        
+        .nav-button {
+            background: #333;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            flex: 1;
+        }
+        
+        .nav-button:hover:not(:disabled) {
+            background: #444;
+            border-color: #555;
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #8b0000;
+            color: #ff6b6b;
+            padding: 20px;
+            border-radius: 6px;
+            max-width: 300px;
+            text-align: center;
+            font-size: 14px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="viewer-section">
+            <canvas id="canvas"></canvas>
+            <div id="loadingSpinner" class="loading-spinner"></div>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </div>
+        
+        <div class="info-section">
+            <div class="step-header">
+                <div class="step-number">Step <span id="stepNum">1</span></div>
+                <div class="step-title" id="stepTitle">Loading robot model...</div>
+                <div class="step-description" id="stepDesc">Initializing 3D viewer</div>
+            </div>
+            
+            <div class="step-content">
+                <div class="info-group">
+                    <div class="info-label">Parts used</div>
+                    <ul class="parts-list" id="partsList">
+                        <li>Loading...</li>
+                    </ul>
+                </div>
+                
+                <div class="info-group">
+                    <div class="info-label">Tools needed</div>
+                    <div class="tools-text" id="toolsText">Loading...</div>
+                </div>
+            </div>
+            
+            <div class="step-counter" id="stepCounter">Step 1 of 12</div>
+            
+            <div class="animation-controls">
+                <button id="replayBtn">↻ Replay Animation</button>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-button" id="prevBtn">← Previous</button>
+                <button class="nav-button" id="nextBtn">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/three@0.124.0/build/three.js"></script>
+    <script src="https://unpkg.com/three@0.124.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    <script>
+        let scene, camera, renderer, model;
+        let currentStep = 1;
+        const totalSteps = 12;
+
+        // Test data
+        const steps = [
+            {
+                stepNumber: 1,
+                title: "Part 1 - Identify this part",
+                description: "This is the first part of your robot assembly.",
+                partsUsedNames: ["Test Part 1", "Test Part 2"],
+                tools: "Test wrench, test bolts"
+            },
+            {
+                stepNumber: 2,
+                title: "Part 2 - Identify this part",
+                description: "This is the second part of your robot assembly.",
+                partsUsedNames: ["Test Part 3"],
+                tools: "Test screwdriver"
+            }
+        ];
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            document.getElementById('loadingSpinner').style.display = 'none';
+            console.error(message);
+        }
+
+        function updateStep() {
+            const step = steps[currentStep - 1] || steps[0];
+            
+            document.getElementById('stepNum').textContent = step.stepNumber;
+            document.getElementById('stepTitle').textContent = step.title;
+            document.getElementById('stepDesc').textContent = step.description;
+            document.getElementById('stepCounter').textContent = `Step ${currentStep} of ${totalSteps}`;
+            
+            const partsList = document.getElementById('partsList');
+            partsList.innerHTML = '';
+            step.partsUsedNames.forEach((partName) => {
+                const li = document.createElement('li');
+                li.textContent = partName;
+                partsList.appendChild(li);
+            });
+            
+            document.getElementById('toolsText').textContent = step.tools || 'No tools required';
+            
+            document.getElementById('prevBtn').disabled = currentStep === 1;
+            document.getElementById('nextBtn').disabled = currentStep === totalSteps;
+        }
+
+        function initThreeJs() {
+            try {
+                const canvas = document.getElementById('canvas');
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x0a0a0a);
+                
+                camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+                camera.position.set(0, 0, 3);
+                
+                renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+                renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+                renderer.setPixelRatio(window.devicePixelRatio);
+                
+                // Lighting
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(5, 10, 7);
+                scene.add(directionalLight);
+                
+                window.addEventListener('resize', onWindowResize);
+                console.log('Three.js initialized');
+            } catch (error) {
+                showError('Failed to initialize Three.js: ' + error.message);
+            }
+        }
+
+        function onWindowResize() {
+            const canvas = document.getElementById('canvas');
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
+            
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function loadModel() {
+            try {
+                const loader = new THREE.GLTFLoader();
+                console.log('Loading model: robot.glb');
+                
+                loader.load(
+                    'robot.glb',
+                    (gltf) => {
+                        model = gltf.scene;
+                        model.scale.set(1, 1, 1);
+                        scene.add(model);
+                        
+                        fitCameraToObject();
+                        animate();
+                        
+                        document.getElementById('loadingSpinner').style.display = 'none';
+                        updateStep();
+                        
+                        console.log('Model loaded successfully');
+                    },
+                    (progress) => {
+                        const percent = Math.round((progress.loaded / progress.total) * 100);
+                        console.log('Loading:', percent + '%');
+                    },
+                    (error) => {
+                        showError('Failed to load robot.glb: ' + error.message);
+                    }
+                );
+            } catch (error) {
+                showError('Error loading model: ' + error.message);
+            }
+        }
+
+        function fitCameraToObject() {
+            if (!model) return;
+            
+            const box = new THREE.Box3().setFromObject(model);
+            const size = box.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const fov = camera.fov * (Math.PI / 180);
+            let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+            cameraZ *= 1.5;
+            
+            camera.position.z = cameraZ;
+            camera.lookAt(box.getCenter(new THREE.Vector3()));
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (model) {
+                model.rotation.y += 0.005;
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStep();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateStep();
+            }
+        });
+
+        document.getElementById('replayBtn').addEventListener('click', () => {
+            console.log('Replay button clicked');
+        });
+
+        // Initialize
+        initThreeJs();
+        loadModel();
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{
+  "projectTitle": "Embroidery Robot - Build Instructions",
+  "modelFile": "robot.glb",
+  "steps": [
+    {
+      "stepNumber": 1,
+      "subAssembly": "base_frame",
+      "title": "Part 1 - Identify this part",
+      "description": "This is the first part of your robot assembly. Look at the 3D viewer to see which part lights up with an orange glow.",
+      "partsToShow": ["empty_2"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 2,
+      "subAssembly": "base_frame",
+      "title": "Part 2 - Identify this part",
+      "description": "Watch as the next part flies in. Replace the name below with the actual component name.",
+      "partsToShow": ["empty_3"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 3,
+      "subAssembly": "base_frame",
+      "title": "Part 3 - Identify this part",
+      "description": "Continuing with base frame assembly.",
+      "partsToShow": ["empty_4"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 4,
+      "subAssembly": "base_frame",
+      "title": "Part 4 - Identify this part",
+      "description": "Next component for the base frame.",
+      "partsToShow": ["empty_5"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 5,
+      "subAssembly": "base_frame",
+      "title": "Part 5 - Identify this part",
+      "description": "Continuing base frame assembly.",
+      "partsToShow": ["empty_6"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 6,
+      "subAssembly": "moving_frame",
+      "title": "Part 6 - Start Moving Frame - Identify this part",
+      "description": "Now we're starting the moving frame assembly. This part will animate in.",
+      "partsToShow": ["empty_7"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 7,
+      "subAssembly": "moving_frame",
+      "title": "Part 7 - Identify this part",
+      "description": "Next component for the moving frame.",
+      "partsToShow": ["empty_8"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 8,
+      "subAssembly": "moving_frame",
+      "title": "Part 8 - Identify this part",
+      "description": "Continuing moving frame assembly.",
+      "partsToShow": ["empty_9"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 9,
+      "subAssembly": "top_part",
+      "title": "Part 9 - Start Top Part - Identify this part",
+      "description": "Now we're starting the top part assembly. Notice the previous assemblies have disappeared.",
+      "partsToShow": ["empty_10"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 10,
+      "subAssembly": "top_part",
+      "title": "Part 10 - Identify this part",
+      "description": "Next component for the top part.",
+      "partsToShow": ["empty_11"],
+      "partsUsedNames": ["REPLACE ME: What is this part called?"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 11,
+      "subAssembly": "final_assembly",
+      "title": "Final Assembly - Combine Base + Moving Frame",
+      "description": "Now all parts from the base frame and moving frame come together. Watch them assemble!",
+      "partsToShow": ["empty_2", "empty_3", "empty_4", "empty_5", "empty_6", "empty_7", "empty_8", "empty_9"],
+      "partsUsedNames": ["Base Frame Assembly", "Moving Frame Assembly"],
+      "tools": ""
+    },
+    {
+      "stepNumber": 12,
+      "subAssembly": "final_assembly",
+      "title": "Final Assembly - Add Top Part",
+      "description": "Finally, the top part is added to complete your embroidery robot!",
+      "partsToShow": ["empty_10", "empty_11"],
+      "partsUsedNames": ["Top Part Assembly"],
+      "tools": ""
+    }
+  ]
+}
