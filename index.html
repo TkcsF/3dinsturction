@@ -274,11 +274,13 @@
 
     <script src="https://unpkg.com/three@0.124.0/build/three.js"></script>
     <script src="https://unpkg.com/three@0.124.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.124.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
-        let scene, camera, renderer, model;
+        let scene, camera, renderer, model, controls;
         let currentStep = 1;
         const totalSteps = 12;
+        let autoRotate = true;
 
         // Test data
         const steps = [
@@ -349,6 +351,14 @@
                 directionalLight.position.set(5, 10, 7);
                 scene.add(directionalLight);
                 
+                // Set up OrbitControls
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+                controls.enableZoom = true;
+                controls.autoRotate = autoRotate;
+                controls.autoRotateSpeed = 5;
+                
                 window.addEventListener('resize', onWindowResize);
                 console.log('Three.js initialized');
             } catch (error) {
@@ -416,8 +426,13 @@
         function animate() {
             requestAnimationFrame(animate);
             
-            if (model) {
-                model.rotation.y += 0.005;
+            if (controls) {
+                controls.update();
+                // Disable auto-rotation if user is interacting
+                if (controls.autoRotate && controls.isDragging) {
+                    controls.autoRotate = false;
+                    autoRotate = false;
+                }
             }
             
             renderer.render(scene, camera);
@@ -438,7 +453,11 @@
         });
 
         document.getElementById('replayBtn').addEventListener('click', () => {
-            console.log('Replay button clicked');
+            if (controls) {
+                controls.autoRotate = true;
+                autoRotate = true;
+            }
+            console.log('Replay animation started');
         });
 
         // Initialize
