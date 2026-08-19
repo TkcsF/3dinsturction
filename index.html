@@ -38,16 +38,6 @@
             display: block;
         }
         
-        .viewer-placeholder {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18px;
-            color: #666;
-            pointer-events: none;
-        }
-        
         .loading-spinner {
             position: absolute;
             top: 50%;
@@ -281,104 +271,91 @@
         let currentStep = 1;
         const totalSteps = 12;
         let autoRotate = false;
-        let allNodes = [];
 
         // Test data
         const steps = [
             {
                 stepNumber: 1,
-                title: "Part 1 - empty_2",
-                description: "Showing part empty_2",
-                partsToShow: ["empty_2"],
-                partsUsedNames: ["empty_2"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 2,
-                title: "Part 2 - empty_3",
-                description: "Showing part empty_3",
-                partsToShow: ["empty_3"],
-                partsUsedNames: ["empty_3"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 3,
-                title: "Part 3 - empty_4",
-                description: "Showing part empty_4",
-                partsToShow: ["empty_4"],
-                partsUsedNames: ["empty_4"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 4,
-                title: "Part 4 - empty_5",
-                description: "Showing part empty_5",
-                partsToShow: ["empty_5"],
-                partsUsedNames: ["empty_5"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 5,
-                title: "Part 5 - empty_6",
-                description: "Showing part empty_6",
-                partsToShow: ["empty_6"],
-                partsUsedNames: ["empty_6"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 6,
-                title: "Part 6 - empty_7",
-                description: "Showing part empty_7",
-                partsToShow: ["empty_7"],
-                partsUsedNames: ["empty_7"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 7,
-                title: "Part 7 - empty_8",
-                description: "Showing part empty_8",
-                partsToShow: ["empty_8"],
-                partsUsedNames: ["empty_8"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 8,
-                title: "Part 8 - empty_9",
-                description: "Showing part empty_9",
-                partsToShow: ["empty_9"],
-                partsUsedNames: ["empty_9"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 9,
-                title: "Part 9 - empty_10",
-                description: "Showing part empty_10",
-                partsToShow: ["empty_10"],
-                partsUsedNames: ["empty_10"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 10,
-                title: "Part 10 - empty_11",
-                description: "Showing part empty_11",
-                partsToShow: ["empty_11"],
-                partsUsedNames: ["empty_11"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 11,
-                title: "Part 11 - empty_12",
-                description: "Showing part empty_12",
-                partsToShow: ["empty_12"],
-                partsUsedNames: ["empty_12"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             },
             {
                 stepNumber: 12,
-                title: "Part 12 - empty_13",
-                description: "Showing part empty_13",
-                partsToShow: ["empty_13"],
-                partsUsedNames: ["empty_13"],
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsUsedNames: ["Full Assembly"],
                 tools: ""
             }
         ];
@@ -389,28 +366,6 @@
             errorEl.style.display = 'block';
             document.getElementById('loadingSpinner').style.display = 'none';
             console.error(message);
-        }
-
-        function hideAllParts() {
-            if (!model) return;
-            model.traverse((child) => {
-                child.visible = false;
-            });
-        }
-
-        function showParts(partNames) {
-            if (!model) return;
-            hideAllParts();
-            
-            model.traverse((child) => {
-                if (partNames.includes(child.name)) {
-                    child.visible = true;
-                    child.traverse((grandchild) => {
-                        grandchild.visible = true;
-                    });
-                    console.log('Showing:', child.name);
-                }
-            });
         }
 
         function updateStep() {
@@ -433,8 +388,6 @@
             
             document.getElementById('prevBtn').disabled = currentStep === 1;
             document.getElementById('nextBtn').disabled = currentStep === totalSteps;
-            
-            showParts(step.partsToShow);
         }
 
         function initThreeJs() {
@@ -495,21 +448,13 @@
                         model.scale.set(1, 1, 1);
                         scene.add(model);
                         
-                        // Collect all node names
-                        model.traverse((child) => {
-                            if (child.name) {
-                                allNodes.push(child.name);
-                                console.log('Node:', child.name);
-                            }
-                        });
-                        
                         fitCameraToObject();
                         animate();
                         
                         document.getElementById('loadingSpinner').style.display = 'none';
                         updateStep();
                         
-                        console.log('Model loaded successfully. Total nodes:', allNodes.length);
+                        console.log('Model loaded successfully');
                     },
                     (progress) => {
                         const percent = Math.round((progress.loaded / progress.total) * 100);
