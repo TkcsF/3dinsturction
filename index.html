@@ -511,17 +511,23 @@
                 const size = box.getSize(new THREE.Vector3());
                 const maxDim = Math.max(size.x, size.y, size.z);
                 
+                console.log('Box size:', size);
+                console.log('Max dimension:', maxDim);
+                
                 if (maxDim === 0) {
                     console.warn('⚠ All visible objects have zero size');
+                    // Default camera position if nothing visible
+                    camera.position.z = 5;
+                    return;
                 }
                 
                 const fov = camera.fov * (Math.PI / 180);
                 let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-                cameraZ *= 1.5;
+                cameraZ *= 2.5; // Increased multiplier from 1.5 to 2.5
                 
-                camera.position.z = cameraZ;
+                camera.position.z = Math.max(cameraZ, 5); // Ensure minimum distance
                 camera.lookAt(box.getCenter(new THREE.Vector3()));
-                console.log('✓ Camera fitted, distance:', cameraZ);
+                console.log('✓ Camera fitted, distance:', camera.position.z);
             } catch (error) {
                 console.error('✗ Error fitting camera:', error);
             }
