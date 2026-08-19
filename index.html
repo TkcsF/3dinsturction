@@ -463,18 +463,13 @@
                         });
                         console.log('✓ Hidden all objects');
                         
-                        // Show only empty_4 if it's a mesh
-                        let found = false;
-                        model.traverse((child) => {
-                            if (child.name === 'empty_4' && child.isMesh) {
-                                child.visible = true;
-                                found = true;
-                                console.log('✓ Showing empty_4');
-                            }
-                        });
-                        
-                        if (!found) {
-                            console.error('✗ empty_4 mesh not found!');
+                        // Get and show only empty_4
+                        const mesh = scene.getObjectByName('empty_4');
+                        if (mesh) {
+                            mesh.visible = true;
+                            console.log('✓ Found and showing empty_4');
+                        } else {
+                            console.error('✗ empty_4 not found with getObjectByName');
                         }
                         
                         fitCameraToObject();
