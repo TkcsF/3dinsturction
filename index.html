@@ -448,6 +448,19 @@
                         model.scale.set(1, 1, 1);
                         scene.add(model);
                         
+                        // Hide everything first
+                        model.traverse((child) => {
+                            child.visible = false;
+                        });
+                        
+                        // Show only empty_4
+                        model.traverse((child) => {
+                            if (child.name === 'empty_4') {
+                                child.visible = true;
+                                console.log('Showing only:', child.name);
+                            }
+                        });
+                        
                         fitCameraToObject();
                         animate();
                         
