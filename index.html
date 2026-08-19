@@ -453,11 +453,11 @@
                             child.visible = false;
                         });
                         
-                        // Show only empty_4
+                        // Show only empty_4 if it's a mesh
                         model.traverse((child) => {
-                            if (child.name === 'empty_4') {
+                            if (child.name === 'empty_4' && child.isMesh) {
                                 child.visible = true;
-                                console.log('Showing only:', child.name);
+                                console.log('Showing only:', child.name, '(isMesh)');
                             }
                         });
                         
