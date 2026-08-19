@@ -442,24 +442,40 @@
                 console.log('Loading model: robot.glb');
                 
                 loader.load(
-                    'robot.glb',
+                    'robot.glb?t=' + Date.now(),
                     (gltf) => {
+                        console.log('✓ Model loaded');
                         model = gltf.scene;
                         model.scale.set(1, 1, 1);
                         scene.add(model);
+                        
+                        // Log all meshes
+                        console.log('All meshes in model:');
+                        model.traverse((child) => {
+                            if (child.isMesh) {
+                                console.log(`  - ${child.name} (isMesh)`);
+                            }
+                        });
                         
                         // Hide everything first
                         model.traverse((child) => {
                             child.visible = false;
                         });
+                        console.log('✓ Hidden all objects');
                         
                         // Show only empty_4 if it's a mesh
+                        let found = false;
                         model.traverse((child) => {
                             if (child.name === 'empty_4' && child.isMesh) {
                                 child.visible = true;
-                                console.log('Showing only:', child.name, '(isMesh)');
+                                found = true;
+                                console.log('✓ Showing empty_4');
                             }
                         });
+                        
+                        if (!found) {
+                            console.error('✗ empty_4 mesh not found!');
+                        }
                         
                         fitCameraToObject();
                         animate();
@@ -467,33 +483,48 @@
                         document.getElementById('loadingSpinner').style.display = 'none';
                         updateStep();
                         
-                        console.log('Model loaded successfully');
+                        console.log('✓ Model loaded successfully');
                     },
                     (progress) => {
                         const percent = Math.round((progress.loaded / progress.total) * 100);
                         console.log('Loading:', percent + '%');
                     },
                     (error) => {
+                        console.error('✗ Model load error:', error);
                         showError('Failed to load robot.glb: ' + error.message);
                     }
                 );
             } catch (error) {
+                console.error('✗ Error in loadModel:', error);
                 showError('Error loading model: ' + error.message);
             }
         }
 
         function fitCameraToObject() {
-            if (!model) return;
+            if (!model) {
+                console.error('✗ No model to fit camera to');
+                return;
+            }
             
-            const box = new THREE.Box3().setFromObject(model);
-            const size = box.getSize(new THREE.Vector3());
-            const maxDim = Math.max(size.x, size.y, size.z);
-            const fov = camera.fov * (Math.PI / 180);
-            let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-            cameraZ *= 1.5;
-            
-            camera.position.z = cameraZ;
-            camera.lookAt(box.getCenter(new THREE.Vector3()));
+            try {
+                const box = new THREE.Box3().setFromObject(model);
+                const size = box.getSize(new THREE.Vector3());
+                const maxDim = Math.max(size.x, size.y, size.z);
+                
+                if (maxDim === 0) {
+                    console.warn('⚠ All visible objects have zero size');
+                }
+                
+                const fov = camera.fov * (Math.PI / 180);
+                let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+                cameraZ *= 1.5;
+                
+                camera.position.z = cameraZ;
+                camera.lookAt(box.getCenter(new THREE.Vector3()));
+                console.log('✓ Camera fitted, distance:', cameraZ);
+            } catch (error) {
+                console.error('✗ Error fitting camera:', error);
+            }
         }
 
         function animate() {
