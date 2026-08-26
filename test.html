@@ -128,32 +128,6 @@
             padding: 12px 0;
         }
         
-        .animation-controls {
-            background: #222;
-            padding: 16px;
-            border-top: 1px solid #333;
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .animation-controls button {
-            background: #0066cc;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-        
-        .animation-controls button:hover {
-            background: #0052a3;
-        }
-        
         .navigation {
             background: #2a2a2a;
             padding: 16px 20px;
@@ -196,29 +170,25 @@
         <div class="info-section">
             <div class="step-header">
                 <div class="step-number">Step <span id="stepNum">1</span></div>
-                <div class="step-title" id="stepTitle">Half Robot Assembly</div>
-                <div class="step-description" id="stepDesc">Showing first 54 parts of the robot</div>
+                <div class="step-title" id="stepTitle">Loading...</div>
+                <div class="step-description" id="stepDesc">Loading step information...</div>
             </div>
             
             <div class="step-content">
                 <div class="info-group">
                     <div class="info-label">Parts used</div>
                     <ul class="parts-list" id="partsList">
-                        <li>54 Parts Visible</li>
+                        <li>Loading...</li>
                     </ul>
                 </div>
                 
                 <div class="info-group">
                     <div class="info-label">Tools needed</div>
-                    <div class="tools-text" id="toolsText">No tools required</div>
+                    <div class="tools-text" id="toolsText">Loading...</div>
                 </div>
             </div>
             
             <div class="step-counter" id="stepCounter">Step 1 of 12</div>
-            
-            <div class="animation-controls">
-                <button id="replayBtn">↻ Replay Animation</button>
-            </div>
             
             <div class="navigation">
                 <button class="nav-button" id="prevBtn">← Previous</button>
@@ -232,6 +202,109 @@
     <script src="https://unpkg.com/three@0.124.0/examples/js/controls/OrbitControls.js"></script>
     
     <script>
+        // JSON DATA EMBEDDED IN HTML
+        const stepsData = [
+            {
+                stepNumber: 1,
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsToShow: [],
+                partsUsedNames: ["Full Assembly"],
+                tools: "No tools required"
+            },
+            {
+                stepNumber: 2,
+                title: "Part empty_2",
+                description: "Showing part empty_2",
+                partsToShow: ["empty_2"],
+                partsUsedNames: ["empty_2"],
+                tools: ""
+            },
+            {
+                stepNumber: 3,
+                title: "Part empty_3",
+                description: "Showing part empty_3",
+                partsToShow: ["empty_3"],
+                partsUsedNames: ["empty_3"],
+                tools: ""
+            },
+            {
+                stepNumber: 4,
+                title: "Part empty_4",
+                description: "Showing part empty_4",
+                partsToShow: ["empty_4"],
+                partsUsedNames: ["empty_4"],
+                tools: ""
+            },
+            {
+                stepNumber: 5,
+                title: "Part empty_5",
+                description: "Showing part empty_5",
+                partsToShow: ["empty_5"],
+                partsUsedNames: ["empty_5"],
+                tools: ""
+            },
+            {
+                stepNumber: 6,
+                title: "Part empty_6",
+                description: "Showing part empty_6",
+                partsToShow: ["empty_6"],
+                partsUsedNames: ["empty_6"],
+                tools: ""
+            },
+            {
+                stepNumber: 7,
+                title: "Part empty_7",
+                description: "Showing part empty_7",
+                partsToShow: ["empty_7"],
+                partsUsedNames: ["empty_7"],
+                tools: ""
+            },
+            {
+                stepNumber: 8,
+                title: "Part empty_8",
+                description: "Showing part empty_8",
+                partsToShow: ["empty_8"],
+                partsUsedNames: ["empty_8"],
+                tools: ""
+            },
+            {
+                stepNumber: 9,
+                title: "Part empty_9",
+                description: "Showing part empty_9",
+                partsToShow: ["empty_9"],
+                partsUsedNames: ["empty_9"],
+                tools: ""
+            },
+            {
+                stepNumber: 10,
+                title: "Part empty_10",
+                description: "Showing part empty_10",
+                partsToShow: ["empty_10"],
+                partsUsedNames: ["empty_10"],
+                tools: ""
+            },
+            {
+                stepNumber: 11,
+                title: "Part empty_11",
+                description: "Showing part empty_11",
+                partsToShow: ["empty_11"],
+                partsUsedNames: ["empty_11"],
+                tools: ""
+            },
+            {
+                stepNumber: 12,
+                title: "Part empty_12",
+                description: "Showing part empty_12",
+                partsToShow: ["empty_12"],
+                partsUsedNames: ["empty_12"],
+                tools: ""
+            }
+        ];
+
+        let currentStep = 1;
+        const totalSteps = stepsData.length;
+
         // Scene setup
         const canvas = document.getElementById('canvas');
         const scene = new THREE.Scene();
@@ -274,6 +347,28 @@
         // First 1/4 of parts (1/4 of 54 = 13.5, so 13 parts)
         const orangeParts = partsToShow.slice(0, 13);
         
+        function updateStep() {
+            const step = stepsData[currentStep - 1];
+            
+            document.getElementById('stepNum').textContent = step.stepNumber;
+            document.getElementById('stepTitle').textContent = step.title;
+            document.getElementById('stepDesc').textContent = step.description;
+            document.getElementById('stepCounter').textContent = `Step ${step.stepNumber} of ${totalSteps}`;
+            
+            const partsList = document.getElementById('partsList');
+            partsList.innerHTML = '';
+            step.partsUsedNames.forEach((partName) => {
+                const li = document.createElement('li');
+                li.textContent = partName;
+                partsList.appendChild(li);
+            });
+            
+            document.getElementById('toolsText').textContent = step.tools || 'No tools required';
+            
+            document.getElementById('prevBtn').disabled = currentStep === 1;
+            document.getElementById('nextBtn').disabled = currentStep === totalSteps;
+        }
+        
         // Load GLB
         const loader = new THREE.GLTFLoader();
         loader.load('robot.glb', (gltf) => {
@@ -292,9 +387,6 @@
                     // Make first 1/4 orange
                     if (orangeParts.includes(child.name)) {
                         child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
-                        console.log('Showing (ORANGE):', child.name);
-                    } else {
-                        console.log('Showing (default):', child.name);
                     }
                 }
             });
@@ -309,9 +401,6 @@
             let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
             camera.position.z = cameraZ * 2;
             camera.lookAt(box.getCenter(new THREE.Vector3()));
-            console.log('Camera positioned');
-            console.log('Total parts shown:', partsToShow.length);
-            console.log('Orange parts:', orangeParts.length);
             
         }, undefined, (error) => {
             console.error('Error loading model:', error);
@@ -325,6 +414,21 @@
         }
         animate();
         
+        // Button events
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStep();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateStep();
+            }
+        });
+        
         // Handle resize
         window.addEventListener('resize', () => {
             const width = canvas.clientWidth;
@@ -333,6 +437,9 @@
             camera.updateProjectionMatrix();
             renderer.setSize(width, height);
         });
+
+        // Initialize
+        updateStep();
     </script>
 </body>
 </html>
