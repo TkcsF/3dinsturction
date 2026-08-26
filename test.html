@@ -4,12 +4,226 @@
     <meta charset="utf-8">
     <title>Half Robot Test - Rotatable</title>
     <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            margin: 0; 
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .viewer-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #333;
+            background: #0a0a0a;
+        }
+        
+        canvas { 
+            flex: 1;
+            display: block;
+        }
+        
+        .info-section {
+            width: 380px;
+            background: #1a1a1a;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .step-header {
+            background: #2a2a2a;
+            padding: 24px 20px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+        }
+        
+        .step-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ff9500;
+            margin-bottom: 8px;
+        }
+        
+        .step-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        
+        .step-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #b0b0b0;
+        }
+        
+        .step-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .info-group {
+            margin-bottom: 24px;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .parts-list {
+            list-style: none;
+        }
+        
+        .parts-list li {
+            font-size: 14px;
+            color: #d0d0d0;
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .parts-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .parts-list li::before {
+            content: "• ";
+            color: #ff9500;
+            margin-right: 8px;
+        }
+        
+        .tools-text {
+            font-size: 14px;
+            color: #d0d0d0;
+            line-height: 1.5;
+        }
+        
+        .step-counter {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            padding: 12px 0;
+        }
+        
+        .animation-controls {
+            background: #222;
+            padding: 16px;
+            border-top: 1px solid #333;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .animation-controls button {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .animation-controls button:hover {
+            background: #0052a3;
+        }
+        
+        .navigation {
+            background: #2a2a2a;
+            padding: 16px 20px;
+            border-top: 1px solid #333;
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+        }
+        
+        .nav-button {
+            background: #333;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            flex: 1;
+        }
+        
+        .nav-button:hover {
+            background: #444;
+            border-color: #555;
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
+    <div class="container">
+        <div class="viewer-section">
+            <canvas id="canvas"></canvas>
+        </div>
+        
+        <div class="info-section">
+            <div class="step-header">
+                <div class="step-number">Step <span id="stepNum">1</span></div>
+                <div class="step-title" id="stepTitle">Half Robot Assembly</div>
+                <div class="step-description" id="stepDesc">Showing first 54 parts of the robot</div>
+            </div>
+            
+            <div class="step-content">
+                <div class="info-group">
+                    <div class="info-label">Parts used</div>
+                    <ul class="parts-list" id="partsList">
+                        <li>54 Parts Visible</li>
+                    </ul>
+                </div>
+                
+                <div class="info-group">
+                    <div class="info-label">Tools needed</div>
+                    <div class="tools-text" id="toolsText">No tools required</div>
+                </div>
+            </div>
+            
+            <div class="step-counter" id="stepCounter">Step 1 of 12</div>
+            
+            <div class="animation-controls">
+                <button id="replayBtn">↻ Replay Animation</button>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-button" id="prevBtn">← Previous</button>
+                <button class="nav-button" id="nextBtn">Next →</button>
+            </div>
+        </div>
+    </div>
     
     <script src="https://unpkg.com/three@0.124.0/build/three.js"></script>
     <script src="https://unpkg.com/three@0.124.0/examples/js/loaders/GLTFLoader.js"></script>
