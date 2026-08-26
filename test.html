@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Half Robot Test</title>
+    <title>Half Robot Test - Rotatable</title>
     <style>
         body { margin: 0; overflow: hidden; }
         canvas { display: block; }
@@ -13,6 +13,7 @@
     
     <script src="https://unpkg.com/three@0.124.0/build/three.js"></script>
     <script src="https://unpkg.com/three@0.124.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.124.0/examples/js/controls/OrbitControls.js"></script>
     
     <script>
         // Scene setup
@@ -34,6 +35,13 @@
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
         directionalLight.position.set(5, 10, 7);
         scene.add(directionalLight);
+        
+        // OrbitControls for rotation
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.enableZoom = true;
+        controls.autoRotate = false;
         
         // Parts to show (half of 108 parts = 54 parts)
         const partsToShow = [
@@ -83,6 +91,7 @@
         // Animation loop
         function animate() {
             requestAnimationFrame(animate);
+            controls.update();
             renderer.render(scene, camera);
         }
         animate();
