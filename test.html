@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Single Mesh Test - empty_4</title>
+    <title>Half Robot Test</title>
     <style>
         body { margin: 0; overflow: hidden; }
         canvas { display: block; }
@@ -35,19 +35,29 @@
         directionalLight.position.set(5, 10, 7);
         scene.add(directionalLight);
         
+        // Parts to show (half of 108 parts = 54 parts)
+        const partsToShow = [
+            'empty_2', 'empty_3', 'empty_4', 'empty_5', 'empty_6', 'empty_7', 'empty_8', 'empty_9', 'empty_10',
+            'empty_11', 'empty_12', 'empty_13', 'empty_14', 'empty_15', 'empty_16', 'empty_17', 'empty_18', 'empty_19', 'empty_20',
+            'empty_21', 'empty_22', 'empty_23', 'empty_24', 'empty_25', 'empty_26', 'empty_27', 'empty_28', 'empty_29', 'empty_30',
+            'empty_31', 'empty_32', 'empty_33', 'empty_34', 'empty_35', 'empty_36', 'empty_37', 'empty_38', 'empty_39', 'empty_40',
+            'empty_41', 'empty_42', 'empty_43', 'empty_44', 'empty_45', 'empty_46', 'empty_47', 'empty_48', 'empty_49', 'empty_50',
+            'empty_51', 'empty_52', 'empty_53', 'empty_54', 'empty_55'
+        ];
+        
         // Load GLB
         const loader = new THREE.GLTFLoader();
         loader.load('robot.glb', (gltf) => {
             console.log('Model loaded');
             
-            // Hide all meshes
+            // Hide all meshes first
             gltf.scene.traverse((child) => {
                 if (child.isMesh) child.visible = false;
             });
             
-            // Show only empty_4
+            // Show only parts in our list
             gltf.scene.traverse((child) => {
-                if (child.name === 'empty_4' && child.isMesh) {
+                if (child.isMesh && partsToShow.includes(child.name)) {
                     child.visible = true;
                     console.log('Showing:', child.name);
                 }
@@ -64,6 +74,7 @@
             camera.position.z = cameraZ * 2;
             camera.lookAt(box.getCenter(new THREE.Vector3()));
             console.log('Camera positioned');
+            console.log('Total parts shown:', partsToShow.length);
             
         }, undefined, (error) => {
             console.error('Error loading model:', error);
