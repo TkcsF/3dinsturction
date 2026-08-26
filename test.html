@@ -347,6 +347,8 @@
         // First 1/4 of parts (1/4 of 54 = 13.5, so 13 parts)
         const orangeParts = partsToShow.slice(0, 13);
         
+        let model = null;
+
         function updateStep() {
             const step = stepsData[currentStep - 1];
             
@@ -367,40 +369,53 @@
             
             document.getElementById('prevBtn').disabled = currentStep === 1;
             document.getElementById('nextBtn').disabled = currentStep === totalSteps;
+            
+            // Show parts based on step number
+            if (model) {
+                model.traverse((child) => {
+                    if (child.isMesh) child.visible = false;
+                });
+                
+                // Show first N parts where N = current step
+                for (let i = 0; i < currentStep; i++) {
+                    if (i < partsToShow.length) {
+                        const partName = partsToShow[i];
+                        model.traverse((child) => {
+                            if (child.name === partName && child.isMesh) {
+                                child.visible = true;
+                            }
+                        });
+                    }
+                }
+            }
         }
         
         // Load GLB
         const loader = new THREE.GLTFLoader();
         loader.load('robot.glb', (gltf) => {
             console.log('Model loaded');
+            model = gltf.scene;
             
-            // Hide all meshes first
-            gltf.scene.traverse((child) => {
-                if (child.isMesh) child.visible = false;
-            });
-            
-            // Show only parts in our list
-            gltf.scene.traverse((child) => {
-                if (child.isMesh && partsToShow.includes(child.name)) {
-                    child.visible = true;
-                    
-                    // Make first 1/4 orange
-                    if (orangeParts.includes(child.name)) {
-                        child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
-                    }
-                }
-            });
-            
-            scene.add(gltf.scene);
+            scene.add(model);
             
             // Fit camera
-            const box = new THREE.Box3().setFromObject(gltf.scene);
+            const box = new THREE.Box3().setFromObject(model);
             const size = box.getSize(new THREE.Vector3());
             const maxDim = Math.max(size.x, size.y, size.z);
             const fov = camera.fov * (Math.PI / 180);
             let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
             camera.position.z = cameraZ * 2;
             camera.lookAt(box.getCenter(new THREE.Vector3()));
+            
+            // Color first 1/4 orange
+            model.traverse((child) => {
+                if (child.isMesh && orangeParts.includes(child.name)) {
+                    child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
+                }
+            });
+            
+            // Show initial step
+            updateStep();
             
         }, undefined, (error) => {
             console.error('Error loading model:', error);
@@ -437,9 +452,6 @@
             camera.updateProjectionMatrix();
             renderer.setSize(width, height);
         });
-
-        // Initialize
-        updateStep();
     </script>
 </body>
 </html>
