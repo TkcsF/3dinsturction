@@ -53,6 +53,9 @@
             'empty_51', 'empty_52', 'empty_53', 'empty_54', 'empty_55'
         ];
         
+        // First 1/4 of parts (1/4 of 54 = 13.5, so 13 parts)
+        const orangeParts = partsToShow.slice(0, 13);
+        
         // Load GLB
         const loader = new THREE.GLTFLoader();
         loader.load('robot.glb', (gltf) => {
@@ -67,7 +70,14 @@
             gltf.scene.traverse((child) => {
                 if (child.isMesh && partsToShow.includes(child.name)) {
                     child.visible = true;
-                    console.log('Showing:', child.name);
+                    
+                    // Make first 1/4 orange
+                    if (orangeParts.includes(child.name)) {
+                        child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
+                        console.log('Showing (ORANGE):', child.name);
+                    } else {
+                        console.log('Showing (default):', child.name);
+                    }
                 }
             });
             
@@ -83,6 +93,7 @@
             camera.lookAt(box.getCenter(new THREE.Vector3()));
             console.log('Camera positioned');
             console.log('Total parts shown:', partsToShow.length);
+            console.log('Orange parts:', orangeParts.length);
             
         }, undefined, (error) => {
             console.error('Error loading model:', error);
