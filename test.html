@@ -370,17 +370,14 @@
             document.getElementById('prevBtn').disabled = currentStep === 1;
             document.getElementById('nextBtn').disabled = currentStep === totalSteps;
             
-            // Show parts from stepData partsToShow
+            // Show parts from current step's partsToShow (cumulative, don't hide)
             if (model) {
-                model.traverse((child) => {
-                    if (child.isMesh) child.visible = false;
-                });
-                
-                // Show parts specified in this step's partsToShow array
+                // Show all parts in current step
                 step.partsToShow.forEach((partName) => {
                     model.traverse((child) => {
                         if (child.name === partName && child.isMesh) {
                             child.visible = true;
+                            console.log('Showing:', child.name);
                         }
                     });
                 });
