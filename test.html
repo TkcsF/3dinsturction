@@ -197,12 +197,8 @@
         </div>
     </div>
     
-    <script src="https://unpkg.com/three@0.124.0/build/three.js"></script>
-    <script src="https://unpkg.com/three@0.124.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://unpkg.com/three@0.124.0/examples/js/controls/OrbitControls.js"></script>
     
     <script>
-        // JSON DATA EMBEDDED IN HTML
         const stepsData = [
             {
                 stepNumber: 1,
@@ -317,7 +313,6 @@
         let currentStep = 1;
         const totalSteps = stepsData.length;
 
-        // Scene setup
         const canvas = document.getElementById('canvas');
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x1a1a1a);
@@ -331,7 +326,6 @@
         renderer.setSize(width, height);
         renderer.setPixelRatio(window.devicePixelRatio);
         
-        // Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
         
@@ -339,28 +333,14 @@
         directionalLight.position.set(5, 10, 7);
         scene.add(directionalLight);
         
-        // OrbitControls for rotation
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
         controls.enableZoom = true;
         controls.autoRotate = false;
         
-        // Parts to show (half of 108 parts = 54 parts)
-        const partsToShow = [
-            'empty_2', 'empty_3', 'empty_4', 'empty_5', 'empty_6', 'empty_7', 'empty_8', 'empty_9', 'empty_10',
-            'empty_11', 'empty_12', 'empty_13', 'empty_14', 'empty_15', 'empty_16', 'empty_17', 'empty_18', 'empty_19', 'empty_20',
-            'empty_21', 'empty_22', 'empty_23', 'empty_24', 'empty_25', 'empty_26', 'empty_27', 'empty_28', 'empty_29', 'empty_30',
-            'empty_31', 'empty_32', 'empty_33', 'empty_34', 'empty_35', 'empty_36', 'empty_37', 'empty_38', 'empty_39', 'empty_40',
-            'empty_41', 'empty_42', 'empty_43', 'empty_44', 'empty_45', 'empty_46', 'empty_47', 'empty_48', 'empty_49', 'empty_50',
-            'empty_51', 'empty_52', 'empty_53', 'empty_54', 'empty_55'
-        ];
-        
-        // First 1/4 of parts (1/4 of 54 = 13.5, so 13 parts)
-        const orangeParts = partsToShow.slice(0, 13);
-        
         let model = null;
-        let cumulativeParts = []; // Track all parts shown so far
+        let cumulativeParts = [];
         let previousSubAssembly = null;
 
         function updateStep() {
@@ -384,63 +364,50 @@
             document.getElementById('prevBtn').disabled = currentStep === 1;
             document.getElementById('nextBtn').disabled = currentStep === totalSteps;
             
-            // Check if subAssembly changed
             if (previousSubAssembly !== null && previousSubAssembly !== step.subAssembly) {
-                // SubAssembly changed - reset cumulative list
                 cumulativeParts = [];
-                console.log('SubAssembly changed from', previousSubAssembly, 'to', step.subAssembly);
             }
             previousSubAssembly = step.subAssembly;
             
-            // Rebuild cumulative parts list for current subAssembly only
             cumulativeParts = [];
             for (let i = 0; i < currentStep; i++) {
                 const stepData = stepsData[i];
-                // Only add parts from same subAssembly
                 if (stepData.subAssembly === step.subAssembly) {
                     cumulativeParts.push(...stepData.partsToShow);
                 }
             }
             
             if (model) {
-                // Step 1: Hide all
                 model.traverse((child) => {
                     if (child.isMesh) child.visible = false;
                 });
                 
-                // Step 2: Show all cumulative parts in DEFAULT color
                 cumulativeParts.forEach((partName) => {
                     model.traverse((child) => {
                         if (child.name === partName && child.isMesh) {
                             child.visible = true;
-                            // All cumulative parts show in default material
                             child.material = new THREE.MeshPhongMaterial();
                         }
                     });
                 });
                 
-                // Step 3: Show current step's parts in ORANGE (only the new ones)
                 step.partsToShow.forEach((partName) => {
                     model.traverse((child) => {
                         if (child.name === partName && child.isMesh) {
                             child.visible = true;
                             child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
-                            console.log('Showing (orange):', child.name);
                         }
                     });
                 });
             }
         }
         
-        // Load GLB
         const loader = new THREE.GLTFLoader();
         loader.load('robot.glb', (gltf) => {
-            console.log('Model loaded');
             model = gltf.scene;
             
             scene.add(model);
             
-            // Fit camera
             const box = new THREE.Box3().setFromObject(model);
             const size = box.getSize(new THREE.Vector3());
             const maxDim = Math.max(size.x, size.y, size.z);
@@ -449,21 +416,18 @@
             camera.position.z = cameraZ * 2;
             camera.lookAt(box.getCenter(new THREE.Vector3()));
             
-            // Color first 1/4 orange
             model.traverse((child) => {
                 if (child.isMesh && orangeParts.includes(child.name)) {
                     child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
                 }
             });
             
-            // Show initial step
             updateStep();
             
         }, undefined, (error) => {
             console.error('Error loading model:', error);
         });
         
-        // Animation loop
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
@@ -471,7 +435,6 @@
         }
         animate();
         
-        // Button events
         document.getElementById('prevBtn').addEventListener('click', () => {
             if (currentStep > 1) {
                 currentStep--;
@@ -486,7 +449,6 @@
             }
         });
         
-        // Handle resize
         window.addEventListener('resize', () => {
             const width = canvas.clientWidth;
             const height = canvas.clientHeight;
