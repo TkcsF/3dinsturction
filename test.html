@@ -216,7 +216,7 @@
                 stepNumber: 2,
                 title: "Part empty_2",
                 description: "Showing part empty_2",
-                partsToShow: ["empty_2", "empty_44", "empty_45", "empty_46"],
+                partsToShow: ["empty_2"],
                 partsUsedNames: ["empty_2"],
                 tools: ""
             },
@@ -370,23 +370,20 @@
             document.getElementById('prevBtn').disabled = currentStep === 1;
             document.getElementById('nextBtn').disabled = currentStep === totalSteps;
             
-            // Show parts based on step number
+            // Show parts from stepData partsToShow
             if (model) {
                 model.traverse((child) => {
                     if (child.isMesh) child.visible = false;
                 });
                 
-                // Show first N parts where N = current step
-                for (let i = 0; i < currentStep; i++) {
-                    if (i < partsToShow.length) {
-                        const partName = partsToShow[i];
-                        model.traverse((child) => {
-                            if (child.name === partName && child.isMesh) {
-                                child.visible = true;
-                            }
-                        });
-                    }
-                }
+                // Show parts specified in this step's partsToShow array
+                step.partsToShow.forEach((partName) => {
+                    model.traverse((child) => {
+                        if (child.name === partName && child.isMesh) {
+                            child.visible = true;
+                        }
+                    });
+                });
             }
         }
         
