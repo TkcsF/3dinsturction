@@ -32,7 +32,7 @@ const stepsData = [
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_35", "empty_60", "empty_26", "empty_32", "empty_43", "empty_80"],
-                partsUsedNames: ["2X 40cm long 2020 aluminium extrusion", "4x 3D printed short plexi holder"],
+                partsUsedNames: ["2X 40cm long 2020 aluminium extrusion", "4X 3D printed short plexi holder"],
                 tools: ""
             },            
             {
@@ -311,7 +311,7 @@ const stepsData = [
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_30"],
-                partsUsedNames: ["Thread mount"],
+                partsUsedNames: ["String mount"],
                 tools: ""
             },            
             {
