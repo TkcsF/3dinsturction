@@ -1,0 +1,110 @@
+const stepsData = [
+            {
+                stepNumber: 1,
+                subAssembly: 1,
+                title: "Complete Robot Assembly",
+                description: "Full embroidery robot showing all parts",
+                partsToShow: ["empty_3"],
+                partsUsedNames: ["Full Assembly"],
+                tools: "No tools required"
+            },
+            {
+                stepNumber: 2,
+                subAssembly: 1,
+                title: "Part empty_2",
+                description: "Showing part empty_2",
+                partsToShow: ["empty_2"],
+                partsUsedNames: ["empty_2"],
+                tools: ""
+            },
+            {
+                stepNumber: 3,
+                subAssembly: 1,
+                title: "Part empty_3",
+                description: "Showing part empty_3",
+                partsToShow: ["empty_3"],
+                partsUsedNames: ["empty_3"],
+                tools: ""
+            },
+            {
+                stepNumber: 4,
+                subAssembly: 1,
+                title: "Part empty_4",
+                description: "Showing part empty_4",
+                partsToShow: ["empty_4"],
+                partsUsedNames: ["empty_4"],
+                tools: ""
+            },
+            {
+                stepNumber: 5,
+                subAssembly: 1,
+                title: "Part empty_5",
+                description: "Showing part empty_5",
+                partsToShow: ["empty_5"],
+                partsUsedNames: ["empty_5"],
+                tools: ""
+            },
+            {
+                stepNumber: 6,
+                subAssembly: 1,
+                title: "Part empty_6",
+                description: "Showing part empty_6",
+                partsToShow: ["empty_6"],
+                partsUsedNames: ["empty_6"],
+                tools: ""
+            },
+            {
+                stepNumber: 7,
+                subAssembly: 2,
+                title: "Part empty_7",
+                description: "Showing part empty_7",
+                partsToShow: ["empty_7"],
+                partsUsedNames: ["empty_7"],
+                tools: ""
+            },
+            {
+                stepNumber: 8,
+                subAssembly: 2,
+                title: "Part empty_8",
+                description: "Showing part empty_8",
+                partsToShow: ["empty_8"],
+                partsUsedNames: ["empty_8"],
+                tools: ""
+            },
+            {
+                stepNumber: 9,
+                subAssembly: 2,
+                title: "Part empty_9",
+                description: "Showing part empty_9",
+                partsToShow: ["empty_9"],
+                partsUsedNames: ["empty_9"],
+                tools: ""
+            },
+            {
+                stepNumber: 10,
+                subAssembly: 2,
+                title: "Part empty_10",
+                description: "Showing part empty_10",
+                partsToShow: ["empty_10"],
+                partsUsedNames: ["empty_10"],
+                tools: ""
+            },
+            {
+                stepNumber: 11,
+                subAssembly: 3,
+                title: "Part empty_11",
+                description: "Showing part empty_11",
+                partsToShow: ["empty_11"],
+                partsUsedNames: ["empty_11"],
+                tools: ""
+            },
+            {
+                stepNumber: 12,
+                subAssembly: 3,
+                title: "Part empty_12",
+                description: "Showing part empty_12",
+                partsToShow: ["empty_12"],
+                partsUsedNames: ["empty_12"],
+                tools: ""
+            }
+        ];
