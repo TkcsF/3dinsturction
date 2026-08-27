@@ -348,6 +348,7 @@
         const orangeParts = partsToShow.slice(0, 13);
         
         let model = null;
+        let cumulativeParts = []; // Track all parts shown so far
 
         function updateStep() {
             const step = stepsData[currentStep - 1];
@@ -370,14 +371,39 @@
             document.getElementById('prevBtn').disabled = currentStep === 1;
             document.getElementById('nextBtn').disabled = currentStep === totalSteps;
             
-            // Show parts from current step's partsToShow (cumulative, don't hide)
+            // Rebuild cumulative parts list up to current step
+            cumulativeParts = [];
+            for (let i = 0; i < currentStep; i++) {
+                const stepData = stepsData[i];
+                cumulativeParts.push(...stepData.partsToShow);
+            }
+            
             if (model) {
-                // Show all parts in current step
+                // Step 1: Hide all
+                model.traverse((child) => {
+                    if (child.isMesh) child.visible = false;
+                });
+                
+                // Step 2: Show all cumulative parts in default color
+                cumulativeParts.forEach((partName) => {
+                    model.traverse((child) => {
+                        if (child.name === partName && child.isMesh) {
+                            child.visible = true;
+                            // Reset to default material
+                            if (!orangeParts.includes(partName)) {
+                                child.material = new THREE.MeshPhongMaterial();
+                            }
+                        }
+                    });
+                });
+                
+                // Step 3: Show current step's parts in orange
                 step.partsToShow.forEach((partName) => {
                     model.traverse((child) => {
                         if (child.name === partName && child.isMesh) {
                             child.visible = true;
-                            console.log('Showing:', child.name);
+                            child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
+                            console.log('Showing (orange):', child.name);
                         }
                     });
                 });
