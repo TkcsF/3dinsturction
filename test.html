@@ -206,6 +206,7 @@
         const stepsData = [
             {
                 stepNumber: 1,
+                subAssembly: 1,
                 title: "Complete Robot Assembly",
                 description: "Full embroidery robot showing all parts",
                 partsToShow: [],
@@ -214,6 +215,7 @@
             },
             {
                 stepNumber: 2,
+                subAssembly: 1,
                 title: "Part empty_2",
                 description: "Showing part empty_2",
                 partsToShow: ["empty_2"],
@@ -222,6 +224,7 @@
             },
             {
                 stepNumber: 3,
+                subAssembly: 1,
                 title: "Part empty_3",
                 description: "Showing part empty_3",
                 partsToShow: ["empty_3"],
@@ -230,6 +233,7 @@
             },
             {
                 stepNumber: 4,
+                subAssembly: 1,
                 title: "Part empty_4",
                 description: "Showing part empty_4",
                 partsToShow: ["empty_4"],
@@ -238,6 +242,7 @@
             },
             {
                 stepNumber: 5,
+                subAssembly: 1,
                 title: "Part empty_5",
                 description: "Showing part empty_5",
                 partsToShow: ["empty_5"],
@@ -246,6 +251,7 @@
             },
             {
                 stepNumber: 6,
+                subAssembly: 1,
                 title: "Part empty_6",
                 description: "Showing part empty_6",
                 partsToShow: ["empty_6"],
@@ -254,6 +260,7 @@
             },
             {
                 stepNumber: 7,
+                subAssembly: 2,
                 title: "Part empty_7",
                 description: "Showing part empty_7",
                 partsToShow: ["empty_7"],
@@ -262,6 +269,7 @@
             },
             {
                 stepNumber: 8,
+                subAssembly: 2,
                 title: "Part empty_8",
                 description: "Showing part empty_8",
                 partsToShow: ["empty_8"],
@@ -270,6 +278,7 @@
             },
             {
                 stepNumber: 9,
+                subAssembly: 2,
                 title: "Part empty_9",
                 description: "Showing part empty_9",
                 partsToShow: ["empty_9"],
@@ -278,6 +287,7 @@
             },
             {
                 stepNumber: 10,
+                subAssembly: 2,
                 title: "Part empty_10",
                 description: "Showing part empty_10",
                 partsToShow: ["empty_10"],
@@ -286,6 +296,7 @@
             },
             {
                 stepNumber: 11,
+                subAssembly: 3,
                 title: "Part empty_11",
                 description: "Showing part empty_11",
                 partsToShow: ["empty_11"],
@@ -294,6 +305,7 @@
             },
             {
                 stepNumber: 12,
+                subAssembly: 3,
                 title: "Part empty_12",
                 description: "Showing part empty_12",
                 partsToShow: ["empty_12"],
@@ -349,6 +361,7 @@
         
         let model = null;
         let cumulativeParts = []; // Track all parts shown so far
+        let previousSubAssembly = null;
 
         function updateStep() {
             const step = stepsData[currentStep - 1];
@@ -371,11 +384,22 @@
             document.getElementById('prevBtn').disabled = currentStep === 1;
             document.getElementById('nextBtn').disabled = currentStep === totalSteps;
             
-            // Rebuild cumulative parts list up to current step
+            // Check if subAssembly changed
+            if (previousSubAssembly !== null && previousSubAssembly !== step.subAssembly) {
+                // SubAssembly changed - reset cumulative list
+                cumulativeParts = [];
+                console.log('SubAssembly changed from', previousSubAssembly, 'to', step.subAssembly);
+            }
+            previousSubAssembly = step.subAssembly;
+            
+            // Rebuild cumulative parts list for current subAssembly only
             cumulativeParts = [];
             for (let i = 0; i < currentStep; i++) {
                 const stepData = stepsData[i];
-                cumulativeParts.push(...stepData.partsToShow);
+                // Only add parts from same subAssembly
+                if (stepData.subAssembly === step.subAssembly) {
+                    cumulativeParts.push(...stepData.partsToShow);
+                }
             }
             
             if (model) {
@@ -384,7 +408,7 @@
                     if (child.isMesh) child.visible = false;
                 });
                 
-                // Step 2: Show all cumulative parts in DEFAULT color (not orange anymore)
+                // Step 2: Show all cumulative parts in DEFAULT color
                 cumulativeParts.forEach((partName) => {
                     model.traverse((child) => {
                         if (child.name === partName && child.isMesh) {
