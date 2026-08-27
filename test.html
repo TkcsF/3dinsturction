@@ -423,7 +423,7 @@
             camera.lookAt(box.getCenter(new THREE.Vector3()));
             
             model.traverse((child) => {
-                if (child.isMesh && orangeParts.includes(child.name)) {
+                if (child.isMesh/* && orangeParts.includes(child.name)*/) {
                     child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
                 }
             });
