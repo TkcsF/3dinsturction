@@ -369,7 +369,6 @@
             
             if (previousSubAssembly !== null && previousSubAssembly !== step.subAssembly) {
                 cumulativeParts = [];
-                console.log('SubAssembly changed from', previousSubAssembly, 'to', step.subAssembly);
             }
             previousSubAssembly = step.subAssembly;
             
@@ -400,7 +399,6 @@
                         if (child.name === partName && child.isMesh) {
                             child.visible = true;
                             child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
-                            console.log('Showing (orange):', child.name);
                         }
                     });
                 });
@@ -409,7 +407,6 @@
         
         const loader = new THREE.GLTFLoader();
         loader.load('robot.glb', (gltf) => {
-            console.log('Model loaded');
             model = gltf.scene;
             
             scene.add(model);
@@ -423,7 +420,7 @@
             camera.lookAt(box.getCenter(new THREE.Vector3()));
             
             model.traverse((child) => {
-                if (child.isMesh/* && orangeParts.includes(child.name)*/) {
+                if (child.isMesh) {
                     child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
                 }
             });
