@@ -4,324 +4,363 @@ const stepsData = [
                 subAssembly: 1,
                 title: "Complete Robot Assembly",
                 description: "Full embroidery robot showing all parts",
-                partsToShow: ["empty_3"],
+                partsToShow: ["empty_63", "empty_70"],
                 partsUsedNames: ["Full Assembly"],
                 tools: "No tools required"
             },
             {
-                stepNumber: ,
+                stepNumber: 2,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_13", "empty_25", "empty_73", "empty_106"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 3,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_11", "empty_14", "empty_18", "empty_28"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 4,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_35", "empty_60", "empty_26", "empty_32", "empty_43", "empty_80"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 5,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_5", "empty_15", "empty_77", "empty_108"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 6,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_7", "empty_45"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 7,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_20", "empty_74"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 8,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_44", "empty_68"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 9,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_61"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 10,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_46", "empty_47", "empty_48", "empty_49", "empty_50", "empty_51", "empty_52", "empty_53", "empty_54", "empty_55", "empty_56"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 11,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_16"],
+                partsUsedNames: [""],
+                tools: ""
+            },           
+            {
+                stepNumber: 12,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_21"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 13,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_33", "empty_42", "empty_93"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 14,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_10", "empty_107"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 15,
+                subAssembly: 1,
+                title: "Part ",
+                description: "Showing part ",
+                partsToShow: ["empty_12"],
+                partsUsedNames: [""],
+                tools: ""
+            },            
+            {
+                stepNumber: 16,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 17,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 18,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 19,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 20,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 21,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },
+            {
+                stepNumber: 22,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },
+            {
+                stepNumber: 23,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 24,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 25,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 26,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 27,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 28,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 29,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 30,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 31,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 32,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 33,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 34,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 35,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 36,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 37,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 38,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 39,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 40,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
                 partsToShow: ["empty_"],
                 partsUsedNames: [""],
                 tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
-                subAssembly: ,
-                title: "Part ",
-                description: "Showing part ",
-                partsToShow: ["empty_"],
-                partsUsedNames: [""],
-                tools: ""
-            },            {
-                stepNumber: ,
+            },            
+            {
+                stepNumber: 41,
                 subAssembly: ,
                 title: "Part ",
                 description: "Showing part ",
