@@ -216,7 +216,7 @@
                 stepNumber: 2,
                 title: "Part empty_2",
                 description: "Showing part empty_2",
-                partsToShow: ["empty_2", "empty_20","empty_21","empty_22",],
+                partsToShow: ["empty_2"],
                 partsUsedNames: ["empty_2"],
                 tools: ""
             },
@@ -384,20 +384,23 @@
                     if (child.isMesh) child.visible = false;
                 });
                 
-                // Step 2: Show all cumulative parts in default color
+                // Step 2: Show all cumulative parts and reset their colors to original
                 cumulativeParts.forEach((partName) => {
                     model.traverse((child) => {
                         if (child.name === partName && child.isMesh) {
                             child.visible = true;
-                            // Reset to default material
-                            if (!orangeParts.includes(partName)) {
+                            // Check if this part was originally orange
+                            if (orangeParts.includes(partName)) {
+                                child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
+                            } else {
+                                // Reset to default material
                                 child.material = new THREE.MeshPhongMaterial();
                             }
                         }
                     });
                 });
                 
-                // Step 3: Show current step's parts in orange
+                // Step 3: Show current step's parts in orange (override previous colors for this step only)
                 step.partsToShow.forEach((partName) => {
                     model.traverse((child) => {
                         if (child.name === partName && child.isMesh) {
