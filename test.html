@@ -384,23 +384,18 @@
                     if (child.isMesh) child.visible = false;
                 });
                 
-                // Step 2: Show all cumulative parts and reset their colors to original
+                // Step 2: Show all cumulative parts in DEFAULT color (not orange anymore)
                 cumulativeParts.forEach((partName) => {
                     model.traverse((child) => {
                         if (child.name === partName && child.isMesh) {
                             child.visible = true;
-                            // Check if this part was originally orange
-                            if (orangeParts.includes(partName)) {
-                                child.material = new THREE.MeshPhongMaterial({ color: 0xff9500 });
-                            } else {
-                                // Reset to default material
-                                child.material = new THREE.MeshPhongMaterial();
-                            }
+                            // All cumulative parts show in default material
+                            child.material = new THREE.MeshPhongMaterial();
                         }
                     });
                 });
                 
-                // Step 3: Show current step's parts in orange (override previous colors for this step only)
+                // Step 3: Show current step's parts in ORANGE (only the new ones)
                 step.partsToShow.forEach((partName) => {
                     model.traverse((child) => {
                         if (child.name === partName && child.isMesh) {
